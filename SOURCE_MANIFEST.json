@@ -1,0 +1,508 @@
+{
+  "algorithm": "SHA256",
+  "excludes": [
+    "SOURCE_MANIFEST.json"
+  ],
+  "files": [
+    {
+      "path": "constraints/lesson1_tf_hdmi_audio.adc",
+      "bytes": 3843,
+      "sha256": "D985219C2267681352F2202C148D05CAC8AE58B3078FF7230988FA3CADAA79D7"
+    },
+    {
+      "path": "constraints/lesson1_tf_hdmi_audio.sdc",
+      "bytes": 6559,
+      "sha256": "E33681FC559786D0D090EB227F237CD78161ACA33EF9369C76E07940B7DDDB3B"
+    },
+    {
+      "path": "lesson1_tf_hdmi_audio.al",
+      "bytes": 29805,
+      "sha256": "07657AC4C18C327EF0F203FEAF0012E34A92F86565BB9B67984A10C7097D7178"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3728,
+      "sha256": "CCB6125801F7DB8900F0A3CE28C0DD98CFC2C914F8F9C58DC44CF6310C9B2518"
+    },
+    {
+      "path": "reference_build.json",
+      "bytes": 588,
+      "sha256": "BC3F4DC236E84D6645DE3ACF01287BAA07980B1EFD37F7BDBD41B91BF7804DC4"
+    },
+    {
+      "path": "src/audio/pcm_async_ring_buffer.v",
+      "bytes": 6707,
+      "sha256": "F05DCAE92540109DD58A7A7F48B08457FC88008D8BBE76ACC0F2867835480766"
+    },
+    {
+      "path": "src/audio/pcm_audio_mode_select.v",
+      "bytes": 5315,
+      "sha256": "DA3A8067157AC95EF66C3DE3EFE54996D2BEE916F4478784D07AFADDA3B80D41"
+    },
+    {
+      "path": "src/audio/pcm_media_tone.v",
+      "bytes": 14438,
+      "sha256": "C577426B787A0C6A2C210FF2425401300CB0751CD4749C339C388619D9F22068"
+    },
+    {
+      "path": "src/audio/pcm_test_tone.v",
+      "bytes": 7845,
+      "sha256": "1C54D85F608DF67392130E970A52D6C56E4E593BCFDCD1B23E739216ACCAEF70"
+    },
+    {
+      "path": "src/audio/pcm_test_tone_to_pcm.v",
+      "bytes": 1683,
+      "sha256": "936FB04203AB68BA26DF7806D1684D33C0DFCF49FC3B1E07596EE576174CF60D"
+    },
+    {
+      "path": "src/audio/pcm_waveform_history.v",
+      "bytes": 3070,
+      "sha256": "84EF5F986529E8142A8E2841C5A05376B1E3C03FC62DAC22CBCC7E04F392C9DA"
+    },
+    {
+      "path": "src/audio_arc_calculate.v",
+      "bytes": 1702,
+      "sha256": "552D8D86AFD237666B30AE08F31247808E89EB024EFDE5EFC670B82EB617A7DC"
+    },
+    {
+      "path": "src/hdmi_720p_phy.v",
+      "bytes": 3695,
+      "sha256": "5E7FB5A722B957333942815EE80EE04E4FA8BBAF20E6444DA08880F9301CF397"
+    },
+    {
+      "path": "src/hdmi_audio_tone_i2s_64fs.v",
+      "bytes": 3589,
+      "sha256": "729CB1635091B7630E5B68306E9F51FFF4E3E06BAE8CE08CC3D7323B3FB9D5CF"
+    },
+    {
+      "path": "src/hdmi_phy_warpper.v",
+      "bytes": 4017,
+      "sha256": "416B082B0987001BDBC0A7E20A557CB8FB1DCA34E25DC881E6D28A8CB3CF4300"
+    },
+    {
+      "path": "src/hdmi1.4b_transmitter_core/hdmi_1_4b_transmitter_core_wrapper.enc.v",
+      "bytes": 328975,
+      "sha256": "867E0B0BDD874BC383D00918C9E1BE3FE01EDF41F343B6A0D73E262776596A63"
+    },
+    {
+      "path": "src/I2S_receiver.v",
+      "bytes": 4205,
+      "sha256": "08904598B42C2E1A4836CD9FB3293BC6C791EA2F79E35C7663A33127DC97F47B"
+    },
+    {
+      "path": "src/include/global_def.v",
+      "bytes": 491,
+      "sha256": "D3EA86E487115FC0293AA2C8A78D22FAEF79DCCB5714BDCE08AE02C78239FBE3"
+    },
+    {
+      "path": "src/include/sdr_as_ram.enc.v",
+      "bytes": 7538,
+      "sha256": "767DBDFBD83D42223B77DFA7DEAB42CE8216A8FD6F6CB41B7E7593D9A345BA57"
+    },
+    {
+      "path": "src/include/sdr_init_ref.enc.v",
+      "bytes": 9025,
+      "sha256": "367E7EDF2092C153D9FB6D98376C5726A3D1D7373756E8FE7256AD9546C90DA5"
+    },
+    {
+      "path": "src/include/sdr_wrrd.enc.v",
+      "bytes": 15637,
+      "sha256": "C7D7FE07D75F66AA88D9F986B3006319C995162434F104F9990664B374CDFDD2"
+    },
+    {
+      "path": "src/IP/afifo_16_32_256.v",
+      "bytes": 34123,
+      "sha256": "3D29B06655482184A9AD157B9BD71B79032DEBE3199168D3B4D9570FDAC31835"
+    },
+    {
+      "path": "src/IP/afifo_32_16_256.v",
+      "bytes": 34123,
+      "sha256": "7C3EE41F30BE75AE686C9ABFF3A840FC5439209CDA077E4AA275EAC0DAB9F564"
+    },
+    {
+      "path": "src/IP/PLL_HDMI_AUDIO.v",
+      "bytes": 2757,
+      "sha256": "1E174C1DC4EDBCE9C61D6B390ACA3B7B94022B60995A92981D5278247B7F5867"
+    },
+    {
+      "path": "src/IP/sdram.v",
+      "bytes": 1108,
+      "sha256": "1487E8583BBF52FE6D079A2854C10EBFF2E569A3872A9088C1C9717BA14D17FE"
+    },
+    {
+      "path": "src/IP/sys_pll.v",
+      "bytes": 2526,
+      "sha256": "C3C2920927BBED96C91B0CD5AA624375D9D7D633040BD37E48FC386E193DB638"
+    },
+    {
+      "path": "src/IP/video_720p_pll.v",
+      "bytes": 1667,
+      "sha256": "FCD26B42998F96A533871B72AE6AE9F5E53343DABFE2F0476A60531CCE1A29A1"
+    },
+    {
+      "path": "src/IP/video_pll.v",
+      "bytes": 2348,
+      "sha256": "70CCC6E4230F6829A0EBEBDA9DB107B066F01A3EC611A1D71C0DE78C69722B64"
+    },
+    {
+      "path": "src/lane_lvds_10_1.v",
+      "bytes": 4421,
+      "sha256": "DE9529321354F04837E051D0EC1681CF44783D4BE3284703A788E081147500BC"
+    },
+    {
+      "path": "src/reset_sync.v",
+      "bytes": 634,
+      "sha256": "2FE7CC426CADE84BB18D9D78ED8E501436AE2466DD163C873AC94C64E9CA889F"
+    },
+    {
+      "path": "src/SD/ax_debounce.v",
+      "bytes": 2201,
+      "sha256": "93AA6DD38051250CC7F777C88466AC180AFE9BCDCE7838B9EA506455D8CBC9B8"
+    },
+    {
+      "path": "src/SD/bmp_cache_preprocessor.v",
+      "bytes": 6123,
+      "sha256": "2B7E737F4D7F2AAC9CC8211316A4AC07A0AB6674A5BE55B0514BF69A720CBFC6"
+    },
+    {
+      "path": "src/SD/bmp_read.v",
+      "bytes": 15945,
+      "sha256": "68AB78462C49BB1513DED56FC8415DAA594934875A4C0E7C4325B5BA902068AB"
+    },
+    {
+      "path": "src/SD/bmp_stream_decoder.v",
+      "bytes": 8818,
+      "sha256": "7231504E6B2547EC917BBE01824065C4CBC39FBFB5C7204AE40A000B237255A0"
+    },
+    {
+      "path": "src/SD/color_bar.v",
+      "bytes": 9141,
+      "sha256": "AFE1F56714EC58D2477BA1717E5A36C5A0DA5FE5C07D70D11AA5ACE710C4B152"
+    },
+    {
+      "path": "src/SD/fat32_file_sector_arbiter.v",
+      "bytes": 2748,
+      "sha256": "4AA2635E2B5D131E58713B513A52559FCD9730ED5C310B082788634C2E368B94"
+    },
+    {
+      "path": "src/SD/fat32_file_streamer.v",
+      "bytes": 11481,
+      "sha256": "7B9A190482446909CC84814987C04D6266A46903479399A8AF4A2892E6CA51E6"
+    },
+    {
+      "path": "src/SD/fat32_media_catalog.v",
+      "bytes": 24900,
+      "sha256": "D1961C92960915B1678F997B65FE22C8762E75F60CAD6EDF5EA1EB997790A4AD"
+    },
+    {
+      "path": "src/SD/fat32_volume_scanner.v",
+      "bytes": 17945,
+      "sha256": "AC1AEE819A55948FD51797F609CCA09B5F9A88074534D4F1E513589421A27BB6"
+    },
+    {
+      "path": "src/SD/fifo_prefetch_2.v",
+      "bytes": 2301,
+      "sha256": "27F6C754AEBF9906C665E6C2DAF53A4D4B895B37B48512AEA96115F5569999D3"
+    },
+    {
+      "path": "src/SD/frame_fifo_read.v",
+      "bytes": 10172,
+      "sha256": "5952075B213EC638F5C9BB238D4D4162685F9E9B5E752674F0E68A92DBEC83AC"
+    },
+    {
+      "path": "src/SD/frame_fifo_write.v",
+      "bytes": 11551,
+      "sha256": "EF0F46443B6F79EBB9FBBA8F39B11DCA90EE7E9AE4637C1D45786744D964E540"
+    },
+    {
+      "path": "src/SD/frame_read_write.v",
+      "bytes": 11057,
+      "sha256": "F9D7D04D81A8C8A3E226F855387971CF2308421BDD4C08C0AB465E9E40AA5CBD"
+    },
+    {
+      "path": "src/SD/hdmi_startup_status_probe.v",
+      "bytes": 2192,
+      "sha256": "6BFED1DB3C75A26A71F0BA84A791E7A0938857AB7CCDAA5555EB62A7A6FCDF86"
+    },
+    {
+      "path": "src/SD/hdmi_startup_timeline_probe.v",
+      "bytes": 6554,
+      "sha256": "18C58D1E9E8EBADFB804214673DFA7B1A441DA7D8A6488419DAF1C129CB9BDF7"
+    },
+    {
+      "path": "src/SD/image_info_panel.v",
+      "bytes": 6271,
+      "sha256": "6BF5E351DA0930EBD2AD1D3EA238A6E8797D72B055EE89C06CD7DA25C21C2060"
+    },
+    {
+      "path": "src/SD/media_cache_auto_timer.v",
+      "bytes": 1106,
+      "sha256": "04B475D85D766C711F4B081DF45BD2B22EC6ED69F782826A8D5393F0BE32C54E"
+    },
+    {
+      "path": "src/SD/media_cache_display_control.v",
+      "bytes": 8445,
+      "sha256": "FACEC0CF58057AACD647F7A8813721CBE7CAC76743DDE9C4A9420F5CAFE16107"
+    },
+    {
+      "path": "src/SD/media_cache_write_flush.v",
+      "bytes": 2963,
+      "sha256": "3F5835DEC131F1CE2ACB2AC3414608B4A9551A3A58558AE532FA49E296410285"
+    },
+    {
+      "path": "src/SD/media_frame_loader.v",
+      "bytes": 17244,
+      "sha256": "7C21661710598A57D22F667F36882269D5FB784DFAC2A7A3201C3784D69C747B"
+    },
+    {
+      "path": "src/SD/media_frame_reader.v",
+      "bytes": 23968,
+      "sha256": "A8BD35CE7AF7C1735CC4DE1752305E6D0A9AFAE365D63503FFAFC9BDC9902048"
+    },
+    {
+      "path": "src/SD/media_image_cache_scheduler.v",
+      "bytes": 16397,
+      "sha256": "181A997BD38E72AFB4BE3D31262613BF31E7B31A11625BE20BC28B64378F2C58"
+    },
+    {
+      "path": "src/SD/media_player_control.v",
+      "bytes": 12045,
+      "sha256": "CF223BB09A60B79396F3E4A2014B7B2A41CA1A04EA70660F82EF73958B688AF1"
+    },
+    {
+      "path": "src/SD/media_sdram_burst_arbiter.v",
+      "bytes": 3369,
+      "sha256": "750D6A600A0284B130A6F6ACE0BA5555EC262916CC399873A7AE845B31FA7CAB"
+    },
+    {
+      "path": "src/SD/media_sdram_write_cdc.v",
+      "bytes": 14109,
+      "sha256": "53B2A48685F29287E98C93138C9EAD949E66A3857877F80F9FEB20492FAE4F30"
+    },
+    {
+      "path": "src/SD/music_cue_loader.v",
+      "bytes": 2358,
+      "sha256": "444CB9B1A435DFF90A87F5BB5675300D0997F594E189D0757722222C1501D843"
+    },
+    {
+      "path": "src/SD/music_cue_table.v",
+      "bytes": 7206,
+      "sha256": "DE353466BF2B1E5C57A5C86BC707DDBE82557322245C1FA1984B2FFEC1E8A34B"
+    },
+    {
+      "path": "src/SD/pcm_playlist_controller.v",
+      "bytes": 4352,
+      "sha256": "9281C47B33EB162D28D5FCA8C1DDF73CDB285CE74FCDD3B670577F0A10A50D72"
+    },
+    {
+      "path": "src/SD/reader_scaler_state_probe.v",
+      "bytes": 4700,
+      "sha256": "A6C345D97A890F4180848BEF4FFE00055A80C7BF5FAE86247B5727C289C3DB9F"
+    },
+    {
+      "path": "src/SD/rgb_video_adapter.v",
+      "bytes": 1263,
+      "sha256": "432107C728A7929A09B307408AA3ECDBFADEA16FD52E6FD7A2868763E88FA89F"
+    },
+    {
+      "path": "src/SD/sd_card_bmp.v",
+      "bytes": 86139,
+      "sha256": "7F964A80E8C14DA5242867F946990A15EA9F26A2DD6FC3C7B06C707921A3690C"
+    },
+    {
+      "path": "src/SD/sd_card_cmd.v",
+      "bytes": 9114,
+      "sha256": "B220F43CEAB56BF6050A784D79E99146627E65C321637D715217306CE5970414"
+    },
+    {
+      "path": "src/SD/sd_card_sec_read_write.v",
+      "bytes": 5620,
+      "sha256": "C245C07E3B0056808D86E06AAD74348494E2A7050D493A3D4141D97CCF115203"
+    },
+    {
+      "path": "src/SD/sd_card_top.v",
+      "bytes": 7277,
+      "sha256": "D5031B5B809A8DF0A2C8CCA194A511C5F74236E810CBE5E8436359F9E5F26A39"
+    },
+    {
+      "path": "src/SD/sd_sector_adapter.v",
+      "bytes": 3356,
+      "sha256": "A24416272B69891A338EB5CBF8A9AB1860B833A6C5226C6CECD72802855AA076"
+    },
+    {
+      "path": "src/SD/sdram.v",
+      "bytes": 2389,
+      "sha256": "F1BFD41497AE2454C6455AF5C0E802F5C3DF3833858B8BD260B1FAD7AF3E37A4"
+    },
+    {
+      "path": "src/SD/seg_decoder.v",
+      "bytes": 766,
+      "sha256": "4592B6E4D2E9E8B7E4AB5266D850D30E43537AB9C4157D4221E3F8DFD342DECD"
+    },
+    {
+      "path": "src/SD/seg_scan.v",
+      "bytes": 1847,
+      "sha256": "08759C329C33CDB7A6070E0B46773F0A6C9C8052B51652DEC29406B9A9DAC1E3"
+    },
+    {
+      "path": "src/SD/spi_master.v",
+      "bytes": 3655,
+      "sha256": "37F7A21144FA5CCA3CC5C3B5F68A5AD40B3108336B600E45A1367734AC61403C"
+    },
+    {
+      "path": "src/SD/startup_load_probe.v",
+      "bytes": 2308,
+      "sha256": "800DB1741AEB89335C8EC0E9AF5245150A770597BFA337F27394F34F95AB0C50"
+    },
+    {
+      "path": "src/SD/video_define.v",
+      "bytes": 21,
+      "sha256": "77748966850A8F5AF0D77F2CDB08006088BA5E1A31B98391FBA6CC61C5247DA2"
+    },
+    {
+      "path": "src/SD/video_delay.v",
+      "bytes": 1595,
+      "sha256": "F47C4B63F8BAA6D8874C87DCA5B72DFDADD19F4A107403DA98752BCE98936433"
+    },
+    {
+      "path": "src/SD/video_fade_transition.v",
+      "bytes": 9594,
+      "sha256": "2AEF06C44C8DC5F2818A469E275C848A7B35392E1E83EFF50C2BD1B2F533BC8D"
+    },
+    {
+      "path": "src/SD/video_reveal_transition.v",
+      "bytes": 7593,
+      "sha256": "E85ADBC26C5AB52D847A4D308A7C80B263BD27B55A00EAA40A0A0027E61CBDA1"
+    },
+    {
+      "path": "src/SD/video_scale_3_2.v",
+      "bytes": 12311,
+      "sha256": "81E460A8D3CCB5E493C2FBEC8A50233934809E297EBEDB8B8B85E656CAE9A712"
+    },
+    {
+      "path": "src/SD/video_scale_bilinear.v",
+      "bytes": 14473,
+      "sha256": "4DF63AC1101BB91195ADD2E7CAF7793394966977E5FD01CF6B363FC3BFC34A98"
+    },
+    {
+      "path": "src/SD/video_scale_geometry.v",
+      "bytes": 5479,
+      "sha256": "2F04DE83ECD21821939E2C850091CD0FC80AEA060B8160907F0517301E092CDD"
+    },
+    {
+      "path": "src/SD/video_timing_ctrl.v",
+      "bytes": 1539,
+      "sha256": "627BD2F6A074C7604C8391D079B83AEC0E0194CC576B77B2CE1986F322FBA79E"
+    },
+    {
+      "path": "src/SD/video_timing_data.v",
+      "bytes": 2432,
+      "sha256": "C6F75501E98DD5995F687AAFB40455BEFFE45B426137B5089A73AC3A036F7282"
+    },
+    {
+      "path": "src/SD/video_waveform_overlay.v",
+      "bytes": 6211,
+      "sha256": "A5BD6AB6BD1AD21CCCED11B653E3E92581985EC122A616729AACDEE61AA627A5"
+    },
+    {
+      "path": "src/startup_pulse.v",
+      "bytes": 713,
+      "sha256": "396E1E56FEBB8028339E646BC2F06B83E07AB11EF840E447422FB941956741C9"
+    },
+    {
+      "path": "src/switch_level_debounce.v",
+      "bytes": 1324,
+      "sha256": "CA33F34B2CE56FAAD4B814E101B1A19CBACBCFEE65EF77862BE5F90A5E06A98F"
+    },
+    {
+      "path": "src/sync_2ff.v",
+      "bytes": 592,
+      "sha256": "6F66B58882C332B8BCB2451B92E9F290CD31D60AAF3514F96693037B376D0410"
+    },
+    {
+      "path": "src/top_tf_hdmi_audio.v",
+      "bytes": 60252,
+      "sha256": "A7290CAB8365F1C3F646F82BAFD631A1855CE23F040C3280BCDE3EA8EE68359F"
+    },
+    {
+      "path": "src/video_rgb_to_axis_640x480.v",
+      "bytes": 1952,
+      "sha256": "E883A7F685342FCB5D32808AB7DA0378A5EE4B62C615A3BD363EBF015B058FC9"
+    },
+    {
+      "path": "src/video_source_test.v",
+      "bytes": 2983,
+      "sha256": "39CC05C9684A594D4254D11E66E97344053AB75BDB00F3F5A301643FD7AADBFC"
+    },
+    {
+      "path": "tools/make_audio_corpus.py",
+      "bytes": 3010,
+      "sha256": "C13D3F54387F049110A0FFB20A5D459AD96C1BFE8E05C6377E609B15DA021E7E"
+    },
+    {
+      "path": "tools/music_sync/.gitignore",
+      "bytes": 26,
+      "sha256": "22C9454E06BE7E4CF5DEBB2F73BE4D122412D51437F9D06443095438867114F0"
+    },
+    {
+      "path": "tools/music_sync/CUE_FORMAT.md",
+      "bytes": 3949,
+      "sha256": "CC76F74C0A1E57E6CF9BC0027BBD8A10C79FC1D78239B05C8BCFD8E163DD9D09"
+    },
+    {
+      "path": "tools/music_sync/cue_format.py",
+      "bytes": 3130,
+      "sha256": "826CDC0E2F7CBE3FA66BC1CF88D7F408C055BDD3DA8DDEF102E8D6D15567EA07"
+    },
+    {
+      "path": "tools/music_sync/export_cue.cmd",
+      "bytes": 562,
+      "sha256": "0705C2A2DE3F502DA3100F0C9E678A18337DB2469360DE8672B6DE2892C6C0B9"
+    },
+    {
+      "path": "tools/music_sync/music_sync.py",
+      "bytes": 21545,
+      "sha256": "610919044CC767CC8B74151F41FF9B9E14C34957FCA5C1833C60B5A36F92CD43"
+    },
+    {
+      "path": "tools/music_sync/README.md",
+      "bytes": 8371,
+      "sha256": "F72E9AB70BF260A899F33F2E7A1D99C88506999D32C0B15AF6003D29F0D43C60"
+    },
+    {
+      "path": "tools/music_sync/requirements.txt",
+      "bytes": 16,
+      "sha256": "6CDC3C277FDFB0CFDDB3ADC45F2306A50E144105AC7F2B59A52FC60F6778B3B8"
+    },
+    {
+      "path": "tools/music_sync/review.html",
+      "bytes": 14577,
+      "sha256": "6EFFD5971A14A26FF2E89AB9EFA026FA3F1292A2FE45DAF96538493D814643AC"
+    },
+    {
+      "path": "tools/music_sync/run.cmd",
+      "bytes": 564,
+      "sha256": "7700E8D3038D77D7DB3C69E6D58E3C9F36EAC6CF9C1022FAB14D407404A6B754"
+    },
+    {
+      "path": "tools/music_sync/test_cue_export.py",
+      "bytes": 9221,
+      "sha256": "0AA02A7BC2CEF1743D5E3ADA7584BDF178A9CF3BCFF8A523B8DB057D7883CA41"
+    },
+    {
+      "path": "tools/music_sync/test_music_sync.py",
+      "bytes": 4935,
+      "sha256": "567F4726A1C63E427AEC96F9E4A35B0523A0BDADA3890FEC9AB086E24C6B8098"
+    },
+    {
+      "path": "tools/music_sync/test_review.py",
+      "bytes": 4307,
+      "sha256": "2CFC69839DDBCE75FC66D896034A2FEC3D887C74E6C373CEB49B4CCC2562DFF0"
+    },
+    {
+      "path": "tools/WAV_PCM.txt",
+      "bytes": 838,
+      "sha256": "ECAFEDF70EF3C3AC7EF9D2F5D9A1C479062ABDA98F3818AC645D779FCA5DC846"
+    }
+  ]
+}

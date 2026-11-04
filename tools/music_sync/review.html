@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>音乐画屏 · 卡点校准</title>
+<style>
+:root{color-scheme:light;font:16px/1.6 system-ui,"Microsoft YaHei",sans-serif;color:#203539;background:#f3f6f5}
+*{box-sizing:border-box}body{max-width:1100px;margin:28px auto;padding:0 20px 60px}h1{font-size:28px;margin-bottom:6px}h2{font-size:20px;margin:0 0 12px}.sub{color:#53666b}section{background:white;border:1px solid #dce5e2;border-radius:14px;padding:22px;margin:20px 0}.row{display:flex;flex-wrap:wrap;gap:14px;align-items:end}label{display:inline-flex;flex-direction:column;gap:5px;font-size:14px}button,input,select{font:inherit;border:1px solid #a9bebb;border-radius:7px;padding:8px 12px}input[type=number]{width:145px}button{background:#edf4f2;cursor:pointer}button.primary{background:#136b60;color:white}button:hover{filter:brightness(.96)}button:disabled{opacity:.5;cursor:default}#song{overflow-wrap:anywhere}#notice{background:#fff5da;padding:10px 14px;border-radius:8px}.warning{color:#87580c}#error{color:#a32222;white-space:pre-wrap}canvas{width:100%;height:145px;background:#f8fbfa;border-radius:8px;cursor:crosshair}#seek{width:100%;padding:0}#clock{font-variant-numeric:tabular-nums}#picture{min-height:90px;background:#dfede8;border-radius:10px;text-align:center;padding:12px;margin-bottom:12px}#picture span{font-size:27px;display:block}.check{display:flex;flex-direction:row;align-items:center;margin:16px 0}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{padding:7px;text-align:left;border-bottom:1px solid #e2eae7}details{margin-top:10px}a{color:#136b60}.small{font-size:14px}.badge{color:#136b60;font-weight:600}
+</style>
+<h1>音乐画屏 · 卡点校准</h1>
+<div id="song" class="sub"></div>
+<p id="notice">候选结果需要试听。每小节拍数由你指定；自动建议的第一拍不一定正确。</p>
+<section>
+  <h2>1. 听拍子，也看切图时刻</h2>
+  <p class="small">普通拍是轻提示音，小节第一拍是较高的提示音；“切图点”只在计划切图时响。可以点击波形跳到歌曲的不同位置。</p>
+  <div id="picture">模拟切图<span id="imageLabel">首图</span><div id="nextCue"></div></div>
+  <canvas id="wave" width="1600" height="220" aria-label="音乐波形与切图位置"></canvas>
+  <input id="seek" type="range" min="0" max="1" step="0.01" value="0" aria-label="播放进度">
+  <div class="row">
+    <button id="play" class="primary">播放</button><button id="stop">回到开头</button>
+    <label>试听内容<select id="listen"><option value="beats">音乐＋每拍提示</option><option value="cuts">音乐＋切图点</option><option value="music">仅音乐</option></select></label>
+    <span id="clock">0:00</span>
+  </div>
+</section>
+<section>
+  <h2>2. 校准小节与切换间隔</h2>
+  <p class="small">先试听自动跟拍。如果拍子跟得对、第一拍错了，用“前移／后移一拍”。固定速度模式适合整首速度稳定且 BPM 已确认的歌曲。</p>
+  <div class="row">
+    <label>拍点来源<select id="mode"><option value="tracked">自动跟拍候选</option><option value="grid">固定 BPM 网格</option></select></label>
+    <label>每小节几拍<input id="meter" type="number" min="2" max="12" step="1"></label>
+    <label>每几个小节切换<select id="bars"><option value="1">1 小节</option><option value="2">2 小节</option></select></label>
+    <label>跳过开头多少秒<input id="startAfter" type="number" min="0" step="0.01"></label>
+  </div>
+  <div class="row" style="margin-top:16px">
+    <label>BPM（固定网格用）<input id="bpm" type="number" min="20" max="400" step="0.001"></label>
+    <label>参考第一拍位置／秒<input id="anchorTime" type="number" min="0" step="0.001"></label>
+    <button id="anchorNow">以当前位置设第一拍</button>
+    <button id="previousBeat">前移一拍</button><button id="nextBeat">后移一拍</button>
+    <button id="reset">恢复最初结果</button>
+  </div>
+  <p id="settingsInfo" class="small"></p><p id="error" role="alert"></p>
+</section>
+<section>
+  <h2>3. 保存时间表</h2>
+  <p class="small">建议试听开头、中间和结尾，确认没有逐渐偏移。当前 FPGA 尚未接入时间表；本工具先用于选择与确认卡点。</p>
+  <label class="check"><input id="reviewed" type="checkbox">我已试听并确认这些拍点和小节起点</label>
+  <div class="row"><button id="saveJson" class="primary">下载时间表 JSON</button><button id="saveCsv">下载切图位置 CSV</button><button id="saveWav">下载当前切图试听 WAV</button></div>
+  <p id="summary" class="small"></p>
+  <details><summary>查看前 30 个切图点</summary><table><thead><tr><th>序号</th><th>时间／秒</th><th>样本位置（从 0 开始）</th></tr></thead><tbody id="cueRows"></tbody></table></details>
+</section>
+<script id="data" type="application/json">/*__DATA__*/</script>
+<script id="pcm" type="application/octet-stream">__PCM_BASE64__</script>
+<script>
+"use strict";
+const data=JSON.parse(document.getElementById('data').textContent), initial=data.schedule;
+let schedule=structuredClone(initial), beats=schedule.beat_samples.slice(), cues=schedule.cues.slice();
+const rate=48000, sampleCount=schedule.pcm.sample_count, duration=sampleCount/rate;
+const $=id=>document.getElementById(id), fmt=t=>`${Math.floor(t/60)}:${(t%60).toFixed(2).padStart(5,'0')}`;
+let context=null, source=null, mixedBuffer=null, original=null, position=0, startedAt=0, running=false, valid=true;
+$('song').textContent=initial.title;
+$('seek').max=duration;
+function originalSamples(){
+  if(original)return original;
+  const binary=atob($('pcm').textContent.trim());
+  original=new Float32Array(sampleCount);
+  for(let i=0;i<sampleCount;i++){let v=binary.charCodeAt(i*2)|(binary.charCodeAt(i*2+1)<<8);if(v&32768)v-=65536;original[i]=v/32768;}
+  return original;
+}
+function mix(mode){
+  const pcm=originalSamples(), out=new Float32Array(sampleCount), s=schedule.settings;
+  for(let i=0;i<out.length;i++)out[i]=pcm[i]*.65;
+  if(mode==='music')return out;
+  const events=mode==='cuts'?cues.map(c=>[c.sample,true]):beats.map((b,i)=>[b,i>=s.anchor_beat&&(i-s.anchor_beat)%s.beats_per_bar===0]);
+  for(const [at,strong] of events){
+    const freq=strong?(mode==='cuts'?1760:1320):880, amp=strong?.28:.14;
+    for(let j=0;j<1680&&at+j<out.length;j++)out[at+j]+=amp*Math.sin(2*Math.PI*freq*j/rate)*Math.exp(-100*j/rate);
+  }
+  for(let i=0;i<out.length;i++)out[i]=Math.max(-1,Math.min(32767/32768,out[i]));
+  return out;
+}
+function now(){return running?Math.min(duration,position+context.currentTime-startedAt):position;}
+function pause(){
+  position=now();running=false;
+  if(source){source.onended=null;source.stop();source.disconnect();source=null;}
+  $('play').textContent='播放';
+}
+async function play(){
+  if(!valid)return;
+  if(running){pause();return;}
+  try{
+    context=context||new AudioContext();await context.resume();
+    if(!mixedBuffer){mixedBuffer=context.createBuffer(1,sampleCount,rate);mixedBuffer.copyToChannel(mix($('listen').value),0);}
+    if(position>=duration)position=0;
+    source=context.createBufferSource();source.buffer=mixedBuffer;source.connect(context.destination);
+    startedAt=context.currentTime;running=true;source.start(0,position);$('play').textContent='暂停';
+    source.onended=()=>{running=false;position=duration;$('play').textContent='播放';source=null;};
+  }catch(error){$('error').textContent='无法播放：'+error.message;}
+}
+function seek(time){const resume=running;pause();position=Math.max(0,Math.min(duration,time));if(resume)play();}
+function nearest(time,list){let best=0;for(let i=1;i<list.length;i++)if(Math.abs(list[i]/rate-time)<Math.abs(list[best]/rate-time))best=i;return best;}
+function controls(){
+  const s=schedule.settings;
+  $('mode').value=s.mode;$('meter').value=s.beats_per_bar;$('bars').value=s.bars_per_change;
+  $('bpm').value=s.bpm||120;$('anchorTime').value=s.first_downbeat_seconds;
+  $('startAfter').value=s.start_after_seconds;$('reviewed').checked=schedule.reviewed;
+}
+function apply(){
+  pause();mixedBuffer=null;$('reviewed').checked=false;schedule.reviewed=false;
+  try{
+    const mode=$('mode').value,meter=Number($('meter').value),bars=Number($('bars').value),bpm=Number($('bpm').value),ref=Number($('anchorTime').value),start=Number($('startAfter').value);
+    if(!Number.isInteger(meter)||meter<2||meter>12)throw Error('每小节拍数应为 2～12 的整数。');
+    if(![1,2].includes(bars))throw Error('请选择每 1 或 2 小节切图。');
+    if(!Number.isFinite(start)||start<0||start>=duration)throw Error('跳过时间必须在歌曲范围内。');
+    if(!Number.isFinite(ref)||ref<0||ref>=duration)throw Error('参考第一拍必须在歌曲范围内。');
+    let anchor=0,reference=ref,newBeats=[];
+    if(mode==='grid'){
+      if(!Number.isFinite(bpm)||bpm<20||bpm>400)throw Error('BPM 应在 20～400 之间。');
+      const first=ref*rate,step=rate*60/bpm;
+      for(let i=0;;i++){const x=Math.round(first+i*step);if(x>=sampleCount)break;newBeats.push(x);}
+    }else{
+      newBeats=initial.tracked_beat_samples.slice();
+      if(!newBeats.length)throw Error('没有可用的自动拍点，请使用已确认 BPM 的固定网格。');
+      anchor=nearest(ref,newBeats);reference=newBeats[anchor]/rate;$('anchorTime').value=reference;
+    }
+    const newCues=[];
+    for(let i=anchor;i<newBeats.length;i+=meter*bars)if(newBeats[i]>=Math.round(start*rate))newCues.push({sample:newBeats[i],seconds:newBeats[i]/rate,beat_index:i,bar_index:1+(i-anchor)/meter});
+    beats=newBeats;cues=newCues;schedule.beat_samples=beats;schedule.cues=cues;
+    schedule.settings={mode,beats_per_bar:meter,bars_per_change:bars,anchor_beat:anchor,start_after_seconds:start,bpm,first_downbeat_seconds:reference};
+    valid=true;$('error').textContent='';
+  }catch(error){valid=false;$('error').textContent=error.message;}
+  update();
+}
+function update(){
+  const s=schedule.settings;
+  $('settingsInfo').textContent=`参考第一拍：${s.first_downbeat_seconds.toFixed(4)} 秒；每 ${s.beats_per_bar} 拍一小节，每 ${s.bars_per_change} 小节切换。自动节拍可能存在半速／倍速误判。`;
+  $('summary').textContent=`${beats.length} 个候选拍点，${cues.length} 个切图点；48 kHz / 单声道 / 16 位。${schedule.reviewed?'已由你确认。':'尚未确认。'}`;
+  $('notice').textContent=schedule.reviewed?'你已确认当前时间表。修改参数后需要重新试听确认。':'候选结果需要试听。每小节拍数由你指定；自动建议的第一拍不一定正确。';
+  $('cueRows').replaceChildren();
+  cues.slice(0,30).forEach((c,i)=>{const tr=document.createElement('tr');for(const value of [i+1,c.seconds.toFixed(4),c.sample]){const td=document.createElement('td');td.textContent=value;tr.appendChild(td);}$('cueRows').appendChild(tr);});
+  for(const id of ['play','saveJson','saveCsv','saveWav'])$(id).disabled=!valid;
+}
+function download(name,blob){const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);}
+function exportJson(){schedule.reviewed=$('reviewed').checked;schedule.firmware_support=false;download('reviewed_schedule.json',new Blob([JSON.stringify(schedule,null,2)],{type:'application/json'}));}
+function exportCsv(){const rows=['sample_index_zero_based,seconds,bar_index,beat_index_zero_based',...cues.map(c=>`${c.sample},${c.seconds.toFixed(9)},${c.bar_index},${c.beat_index}`)];download('reviewed_cues.csv',new Blob(['\ufeff'+rows.join('\r\n')],{type:'text/csv;charset=utf-8'}));}
+function exportWav(){
+  const samples=mix('cuts'),buffer=new ArrayBuffer(44+sampleCount*2),v=new DataView(buffer);
+  const text=(at,s)=>{for(let i=0;i<s.length;i++)v.setUint8(at+i,s.charCodeAt(i));};
+  text(0,'RIFF');v.setUint32(4,36+sampleCount*2,true);text(8,'WAVE');text(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,rate,true);v.setUint32(28,rate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);text(36,'data');v.setUint32(40,sampleCount*2,true);
+  for(let i=0;i<sampleCount;i++)v.setInt16(44+i*2,Math.round(samples[i]*32768),true);
+  download('reviewed_cuts_preview.wav',new Blob([buffer],{type:'audio/wav'}));
+}
+function draw(){
+  const t=now(),canvas=$('wave'),c=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+  c.clearRect(0,0,w,h);c.fillStyle='#99bcb0';const peaks=data.peaks;
+  for(let i=0;i<peaks.length;i++)c.fillRect(i*w/peaks.length,h/2-peaks[i]*h*.43,Math.max(1,w/peaks.length),Math.max(1,peaks[i]*h*.86));
+  c.fillStyle='#bc782c';for(const cue of cues)c.fillRect(cue.seconds/duration*w,0,1,h);
+  c.fillStyle='#165e53';c.fillRect(t/duration*w,0,3,h);
+  $('seek').value=t;$('clock').textContent=`${fmt(t)} / ${fmt(duration)}`;
+  let passed=0;while(passed<cues.length&&cues[passed].seconds<=t)passed++;
+  $('imageLabel').textContent=passed?`画面 ${passed+1}`:'首图';
+  $('nextCue').textContent=passed<cues.length?`下一次切图：${cues[passed].seconds.toFixed(2)} 秒`:'本曲没有更多切图点';
+  requestAnimationFrame(draw);
+}
+$('play').onclick=play;$('stop').onclick=()=>{pause();position=0;};
+$('seek').oninput=()=>seek(Number($('seek').value));
+$('wave').onclick=e=>seek((e.clientX-$('wave').getBoundingClientRect().left)/$('wave').getBoundingClientRect().width*duration);
+$('listen').onchange=()=>{const resume=running;pause();mixedBuffer=null;if(resume)play();};
+for(const id of ['mode','meter','bars','bpm','anchorTime','startAfter'])$(id).onchange=apply;
+$('anchorNow').onclick=()=>{$('anchorTime').value=now();apply();};
+function shift(delta){const s=schedule.settings;if(s.mode==='tracked'&&beats.length){const index=Math.max(0,Math.min(beats.length-1,s.anchor_beat+delta));$('anchorTime').value=beats[index]/rate;}else{$('anchorTime').value=Math.max(0,Number($('anchorTime').value)+delta*60/Number($('bpm').value));}apply();}
+$('previousBeat').onclick=()=>shift(-1);$('nextBeat').onclick=()=>shift(1);
+$('reset').onclick=()=>{pause();mixedBuffer=null;schedule=structuredClone(initial);beats=schedule.beat_samples.slice();cues=schedule.cues.slice();valid=true;$('error').textContent='';controls();update();};
+$('reviewed').onchange=()=>{schedule.reviewed=$('reviewed').checked;update();};
+$('saveJson').onclick=exportJson;$('saveCsv').onclick=exportCsv;$('saveWav').onclick=exportWav;
+controls();update();draw();
+</script>
+</html>

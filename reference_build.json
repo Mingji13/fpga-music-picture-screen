@@ -1,0 +1,14 @@
+{
+  "reference_version": "arpeggio_melodies_20261031",
+  "device": "EG4S20BG256",
+  "top_module": "top",
+  "td_version": "6.2.168116",
+  "gate_pack_effort": "high",
+  "place_seed": 2,
+  "route_fix_hold": "on",
+  "bitstream_filename": "music_screen_720p_arpeggio_melodies.bit",
+  "bitstream_bytes": 658724,
+  "bitstream_sha256": "C8964E798A9C0D8F204EEA812EA9AF8F9BD171839844DE5489C576BD696B4C6D",
+  "historical_timing_ns": { "SWNS": 0.111, "STNS": 0.0, "HWNS": 0.019, "HTNS": 0.0 },
+  "note": "Historical final-build record. Packaging did not rerun synthesis, implementation or bitgen."
+}

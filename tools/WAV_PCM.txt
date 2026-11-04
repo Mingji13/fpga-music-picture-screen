@@ -1,0 +1,18 @@
+WAV 转 PCM（在工程根目录打开 PowerShell）
+========================================
+
+需要 Python 3.9～3.12，示例使用 Python 3.12。
+输入必须是未压缩 PCM WAV；支持单声道/双声道，8/16/24/32 位整数样本。
+
+py -3.12 .\tools\make_audio_corpus.py "D:\music\歌曲.wav" "D:\music\SONG1.PCM"
+
+把示例中的输入、输出路径改成实际路径；输出编号可为 SONG1～SONG16。
+输出是 48000 Hz、单声道、16 位有符号小端、无文件头 PCM。
+将生成的 SONG1.PCM 复制到 FAT32 TF 卡根目录即可。
+
+要执行的是 make_audio_corpus.py，WAV 路径是它的参数，不能用 Python 直接运行 WAV 文件。
+工具默认不覆盖已有输出。完整参数：
+
+py -3.12 .\tools\make_audio_corpus.py --help
+
+音乐卡点试听和 CUE 导出见 tools\music_sync\README.md。
